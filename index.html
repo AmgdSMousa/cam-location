@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>افتح الكاميرا والموقع</title>
+</head>
+<body>
+  <h2>يرجى السماح للوصول للكاميرا والموقع</h2>
+  <video id="video" width="300" autoplay></video>
+  <p id="location">جاري تحديد الموقع...</p>
+
+  <script>
+    // فتح الكاميرا
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        document.getElementById('video').srcObject = stream;
+      })
+      .catch(error => {
+        alert("تم رفض الوصول إلى الكاميرا");
+      });
+
+    // تحديد الموقع
+    navigator.geolocation.getCurrentPosition(position => {
+      const { latitude, longitude } = position.coords;
+      document.getElementById('location').textContent = `موقعك: ${latitude}, ${longitude}`;
+      // هنا ممكن تبعت البيانات لسيرفر
+    }, error => {
+      document.getElementById('location').textContent = "تم رفض الموقع";
+    });
+  </script>
+</body>
+</html>
